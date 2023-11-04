@@ -3645,21 +3645,12 @@ defmodule ExCountries.Subdivision do
   """
   def code_by_name(state_name) do
     @state_or_province
-    |> Enum.filter(fn %{"name" => name} ->
-      name
-      |> String.downcase()
-      |> apply_filter_condition(state_name |> String.downcase())
+    |> Enum.find(fn %{"name" => name} ->
+      String.downcase(name) == String.downcase(state_name)
     end)
-    |> process_response("code")
     |> get_state_code()
   end
 
-  defp apply_filter_condition(c1, c2) when c1 > c2, do: c1 =~ c2
-  defp apply_filter_condition(c1, c2), do: c2 =~ c1
-
-  defp process_response([], _), do: nil
-  defp process_response([entity | _], key), do: entity[key]
-
   defp get_state_code(nil), do: nil
-  defp get_state_code(code), do: String.split(code, "-") |> List.last()
+  defp get_state_code(%{"code" => code}), do: code |> String.split("-") |> List.last()
 end

@@ -288,31 +288,23 @@ defmodule ExCountries.Country do
   def swith_alpha(country_code) do
     country_code
     |> maybe_alpha2_or_3()
-    |> filter_country(country_code |> String.downcase())
   end
 
-  defp filter_country(nil, _), do: nil
-
-  defp filter_country(current_code, country) do
-    @countries
-    |> Enum.filter(fn %{^current_code => filtered_country} ->
-      filtered_country
-      |> String.downcase()
-      |> apply_filter_condition(country)
-    end)
-    |> process_response(current_code)
-  end
-
-  defp apply_filter_condition(c1, c2) when c1 > c2, do: c1 =~ c2
-  defp apply_filter_condition(c1, c2), do: c2 =~ c1
-
+  # Assuming country_code is either alpha2 or alpha3 code.
   defp maybe_alpha2_or_3(code) do
-    case String.length(code) do
-      2 -> "alpha3"
-      3 -> "alpha2"
-      _ -> nil
-    end
+    @countries
+    |> Enum.find(fn country ->
+      country["alpha2"] == String.downcase(code) or
+        country["alpha3"] == String.downcase(code)
+    end)
+    |> switch_code(String.length(code))
   end
+
+  # This function takes the found country and the original code,
+  # and switches to the other alpha code.
+  defp switch_code(nil, _code_length), do: nil
+  defp switch_code(country, code_length) when code_length == 2, do: country["alpha3"]
+  defp switch_code(country, _code_length), do: country["alpha2"]
 
   defp process_response([], _), do: nil
   defp process_response([entity | _], key), do: entity[key]
