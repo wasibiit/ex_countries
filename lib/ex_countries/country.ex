@@ -303,8 +303,12 @@ defmodule ExCountries.Country do
   # This function takes the found country and the original code,
   # and switches to the other alpha code.
   defp switch_code(nil, _code_length), do: nil
-  defp switch_code(country, code_length) when code_length == 2, do: country["alpha3"]
-  defp switch_code(country, _code_length), do: country["alpha2"]
+
+  defp switch_code(country, code_length) when code_length == 2 do
+    country["alpha3"] |> String.upcase()
+  end
+
+  defp switch_code(country, _code_length), do: country["alpha2"] |> String.upcase()
 
   defp process_response([], _), do: nil
   defp process_response([entity | _], key), do: entity[key]
