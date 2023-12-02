@@ -203,7 +203,12 @@ defmodule ExCountries.Country do
     %{"id" => 756, "alpha2" => "ch", "alpha3" => "che", "name" => "Switzerland"},
     %{"id" => 760, "alpha2" => "sy", "alpha3" => "syr", "name" => "Syrian Arab Republic"},
     %{"id" => 762, "alpha2" => "tj", "alpha3" => "tjk", "name" => "Tajikistan"},
-    %{"id" => 834, "alpha2" => "tz", "alpha3" => "tza", "name" => "Tanzania, United Republic of"},
+    %{
+      "id" => 834,
+      "alpha2" => "tz",
+      "alpha3" => "tza",
+      "name" => "Tanzania, United Republic of"
+    },
     %{"id" => 764, "alpha2" => "th", "alpha3" => "tha", "name" => "Thailand"},
     %{"id" => 626, "alpha2" => "tl", "alpha3" => "tls", "name" => "Timor-Leste"},
     %{"id" => 768, "alpha2" => "tg", "alpha3" => "tgo", "name" => "Togo"},
@@ -268,40 +273,45 @@ defmodule ExCountries.Country do
   def code_by_name(_, _), do: nil
 
   @doc """
-  Swith country codes between `alpha2` and `alpha3`.
-
-  -> if passed `alpha2` will return `alpha3`
-  -> if passed `alpha3` will return `alpha2`
+  Normalize country code(alpha2 or alpha3) and returns the other codes.
+  By default it will switch between alpha2 and alpha3, 
+  but you can pass `:alpha2` or `:alpha3` options, will only return `alpha2 or alpha3`.
 
   ## Examples
 
-      iex> ExCountries.Country.swith_alpha("USA")
+      iex> ExCountries.Country.normalize_alpha("USA")
       "US"
 
-      iex> ExCountries.Country.swith_alpha("US")
+      iex> ExCountries.Country.normalize_alpha("US", :alpha3)
       "USA"
 
-      iex> ExCountries.Country.swith_alpha("wrong name")
+      iex> ExCountries.Country.normalize_alpha("wrong name")
       nil
   """
 
-  def swith_alpha(country_code) do
-    country_code
-    |> maybe_alpha2_or_3()
+  def normalize_alpha(country_code, opts \\ :switch) do
+    country_code |> maybe_alpha2_or_3(opts)
   end
 
   # Assuming country_code is either alpha2 or alpha3 code.
-  defp maybe_alpha2_or_3(code) do
+  defp maybe_alpha2_or_3(code, :switch) do
     @countries
-    |> Enum.find(fn country ->
-      country["alpha2"] == String.downcase(code) or
-        country["alpha3"] == String.downcase(code)
-    end)
+    |> Enum.find(&condition(&1, code))
     |> switch_code(String.length(code))
   end
 
-  # This function takes the found country and the original code,
-  # and switches to the other alpha code.
+  defp maybe_alpha2_or_3(code, :alpha2) do
+    @countries
+    |> Enum.find(&condition(&1, code))
+    |> get_alpha2()
+  end
+
+  defp maybe_alpha2_or_3(code, :alpha3) do
+    @countries
+    |> Enum.find(&condition(&1, code))
+    |> get_alpha3()
+  end
+
   defp switch_code(nil, _code_length), do: nil
 
   defp switch_code(country, code_length) when code_length == 2 do
@@ -309,6 +319,18 @@ defmodule ExCountries.Country do
   end
 
   defp switch_code(country, _code_length), do: country["alpha2"] |> String.upcase()
+
+  # Extracts the alpha2 code.
+  defp get_alpha2(nil), do: nil
+  defp get_alpha2(country), do: country["alpha2"] |> String.upcase()
+
+  # Extracts the alpha3 code.
+  defp get_alpha3(nil), do: nil
+  defp get_alpha3(country), do: country["alpha3"] |> String.upcase()
+
+  defp condition(country, code) do
+    country["alpha2"] == String.downcase(code) or country["alpha3"] == String.downcase(code)
+  end
 
   defp process_response([], _), do: nil
   defp process_response([entity | _], key), do: entity[key]
