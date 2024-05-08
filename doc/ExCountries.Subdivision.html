@@ -5,15 +5,15 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.30.9">
-    <meta name="project" content="ex_countries v0.0.2">
+    <meta name="project" content="ex_countries v0.0.3">
 
-    <title>ExCountries.Subdivision — ex_countries v0.0.2</title>
+    <title>ExCountries.Subdivision — ex_countries v0.0.3</title>
     <link rel="stylesheet" href="dist/html-elixir-XFYN5IVA.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
-    <script src="dist/sidebar_items-56740A9A.js"></script>
+    <script src="dist/sidebar_items-949D1070.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -68,7 +68,7 @@
 ex_countries
       </a>
       <div class="sidebar-projectVersion" translate="no">
-        v0.0.2
+        v0.0.3
       </div>
     </div>
     <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
@@ -112,13 +112,14 @@ Pages
 
 
   <span translate="no">ExCountries.Subdivision</span> 
-  <small class="app-vsn" translate="no">(ex_countries v0.0.2)</small>
+  <small class="app-vsn" translate="no">(ex_countries v0.0.3)</small>
 
 </h1>
 
 
   <section id="moduledoc">
-<p>This module contains list of States or Provinces of countries and returns state_or_province codes by name and vice versa. </p>
+<p>This module contains list of States or Provinces of countries and
+returns state_or_province codes by name and vice versa.</p>
   </section>
 
 
@@ -141,6 +142,16 @@ Pages
       </div>
 
         <div class="summary-synopsis"><p>Get State or province code by full name and returns nil if not found.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#normalize_state/3" translate="no">normalize_state(country_code_or_name, state_code_or_name, opts \\ :switch)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get State/province code/name by country name/code</p></div>
 
     </div>
 
@@ -177,10 +188,48 @@ Pages
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">ExCountries.Subdivision</span><span class="o">.</span><span class="n">code_by_name</span><span class="p" data-group-id="7373758272-1">(</span><span class="s">&quot;Punjab&quot;</span><span class="p" data-group-id="7373758272-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">ExCountries.Subdivision</span><span class="o">.</span><span class="n">code_by_name</span><span class="p" data-group-id="0771752207-1">(</span><span class="s">&quot;Punjab&quot;</span><span class="p" data-group-id="0771752207-1">)</span><span class="w">
 </span><span class="s">&quot;PB&quot;</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">ExCountries.Subdivision</span><span class="o">.</span><span class="n">code_by_name</span><span class="p" data-group-id="7373758272-2">(</span><span class="s">&quot;wrong name&quot;</span><span class="p" data-group-id="7373758272-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">ExCountries.Subdivision</span><span class="o">.</span><span class="n">code_by_name</span><span class="p" data-group-id="0771752207-2">(</span><span class="s">&quot;wrong name&quot;</span><span class="p" data-group-id="0771752207-2">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="normalize_state/3">
+
+    <span id="normalize_state/2"></span>
+
+  <div class="detail-header">
+    <a href="#normalize_state/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">normalize_state(country_code_or_name, state_code_or_name, opts \\ :switch)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Get State/province code/name by country name/code</p><h2 id="normalize_state/3-examples" class="section-heading">
+  <a href="#normalize_state/3-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">ExCountries.Subdivision</span><span class="o">.</span><span class="n">code_by_name</span><span class="p" data-group-id="3423154279-1">(</span><span class="s">&quot;pakistan&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Punjab&quot;</span><span class="p" data-group-id="3423154279-1">)</span><span class="w">
+</span><span class="s">&quot;PB&quot;</span><span class="w">
+
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">ExCountries.Subdivision</span><span class="o">.</span><span class="n">code_by_name</span><span class="p" data-group-id="3423154279-2">(</span><span class="s">&quot;PB&quot;</span><span class="p" data-group-id="3423154279-2">)</span><span class="w">
+</span><span class="s">&quot;Punjab&quot;</span><span class="w">
+
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">ExCountries.Subdivision</span><span class="o">.</span><span class="n">code_by_name</span><span class="p" data-group-id="3423154279-3">(</span><span class="s">&quot;PK&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Punjab&quot;</span><span class="p" data-group-id="3423154279-3">)</span><span class="w">
+</span><span class="s">&quot;PB&quot;</span><span class="w">
+
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">ExCountries.Subdivision</span><span class="o">.</span><span class="n">code_by_name</span><span class="p" data-group-id="3423154279-4">(</span><span class="s">&quot;pakistan&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PB&quot;</span><span class="p" data-group-id="3423154279-4">)</span><span class="w">
+</span><span class="s">&quot;Punjab&quot;</span><span class="w">
+
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">ExCountries.Subdivision</span><span class="o">.</span><span class="n">code_by_name</span><span class="p" data-group-id="3423154279-5">(</span><span class="s">&quot;pakistan&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;wrong name&quot;</span><span class="p" data-group-id="3423154279-5">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
@@ -192,11 +241,11 @@ Pages
         <p>
 
             <span class="line">
-              <a href="https://hex.pm/packages/ex_countries/0.0.2" class="footer-hex-package">Hex Package</a>
+              <a href="https://hex.pm/packages/ex_countries/0.0.3" class="footer-hex-package">Hex Package</a>
 
-              <a href="https://preview.hex.pm/preview/ex_countries/0.0.2">Hex Preview</a>
+              <a href="https://preview.hex.pm/preview/ex_countries/0.0.3">Hex Preview</a>
 
-                (<a href="https://preview.hex.pm/preview/ex_countries/0.0.2/show/lib/ex_countries/subdivision.ex">current file</a>)
+                (<a href="https://preview.hex.pm/preview/ex_countries/0.0.3/show/lib/ex_countries/subdivision.ex">current file</a>)
 
             </span>
 

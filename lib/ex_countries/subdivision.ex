@@ -3653,9 +3653,6 @@ defmodule ExCountries.Subdivision do
     |> get_state_code()
   end
 
-  defp get_state_code(nil), do: nil
-  defp get_state_code(%{"code" => code}), do: code |> String.split("-") |> List.last()
-
   @doc """
   Get State/province code/name by country name/code
   ## Examples
