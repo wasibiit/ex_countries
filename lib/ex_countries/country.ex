@@ -274,7 +274,7 @@ defmodule ExCountries.Country do
 
   @doc """
   Normalize country code(alpha2 or alpha3) and returns the other codes.
-  By default it will switch between alpha2 and alpha3, 
+  By default it will switch between alpha2 and alpha3,
   but you can pass `:alpha2` or `:alpha3` options, will only return `alpha2 or alpha3`.
 
   ## Examples
@@ -289,8 +289,15 @@ defmodule ExCountries.Country do
       nil
   """
 
-  def normalize_alpha(country_code, opts \\ :switch) do
-    country_code |> maybe_alpha2_or_3(opts)
+  def normalize_alpha(country_name_or_code, opts \\ :switch) do
+    country_name_or_code =
+      if String.length(country_name_or_code) > 3 do
+        code_by_name(country_name_or_code)
+      else
+        country_name_or_code
+      end
+
+    country_name_or_code |> maybe_alpha2_or_3(opts)
   end
 
   # Assuming country_code is either alpha2 or alpha3 code.
