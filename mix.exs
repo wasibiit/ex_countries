@@ -4,7 +4,7 @@ defmodule ExCountries.Mixfile do
   def project do
     [
       app: :ex_countries,
-      version: "0.0.2",
+      version: "0.0.3",
       elixir: "~> 1.15",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
@@ -23,7 +23,7 @@ defmodule ExCountries.Mixfile do
 
   # Dependencies can be Hex packages:
   #
-  #   {:mydep, "~> 0.3.0"}
+  #   {:mydep, "~> 0.0.3"}
   #
   # Or git/path repositories:
   #
